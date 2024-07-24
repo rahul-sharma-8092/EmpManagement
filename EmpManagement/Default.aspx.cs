@@ -12,20 +12,20 @@ namespace EmpManagement
     public partial class _Default : Page
     {
         int pageIndex = 1;
-        int pageSize = 5;
+        int pageSize = 10;
         string search = "";
 
         protected void Page_Load(object sender, EventArgs e)
         {
             search = TxtSearch.Text;
-            
+
             if (!Page.IsPostBack)
             {
                 GetAllEmployees(pageSize, pageIndex, search);
             }
         }
 
-        private void GetAllEmployees(int parmPageSize = 5, int parmPageIndex = 1, string parmSearch = "")
+        private void GetAllEmployees(int parmPageSize = 10, int parmPageIndex = 1, string parmSearch = "")
         {
             List<Employee> listEmp = new EmployeeMGNT().GetAllEmployees(parmPageSize, parmPageIndex, parmSearch);
 
@@ -35,13 +35,15 @@ namespace EmpManagement
             if (listEmp.Count > 0)
             {
                 SpnNoRecord.Visible = false;
+                divPagination.Visible = true;
+                GetPagination(listEmp[0].RowCount, parmPageIndex);
             }
             else
             {
                 SpnNoRecord.Visible = true;
+                divPagination.Visible = false;
             }
 
-            GetPagination(listEmp[0].RowCount, parmPageIndex);
         }
 
         protected void BtnDelete_Click(object sender, EventArgs e)
@@ -65,16 +67,31 @@ namespace EmpManagement
         private void GetPagination(int totalCount, int pageIndex = 1)
         {
             pageSize = Convert.ToInt32(ddlPageSize.SelectedValue);
-            int pagecount = (int)Math.Ceiling((float)totalCount/pageSize);
+            int pagecount = (int)Math.Ceiling((float)totalCount / pageSize);
+
+            int blockSize = 10;
+            int currentBlock = (pageIndex - 1) / blockSize;
+            int startPage = currentBlock * blockSize + 1;
+            int endPage = Math.Min(startPage + blockSize - 1, pagecount);
 
             List<ListItem> pgnButtonList = new List<ListItem>();
 
             pgnButtonList.Add(new ListItem { Text = "First", Value = "1", Enabled = pageIndex > 1 });
 
-            for (int i = 1; i <= pagecount; i++)
+            if (currentBlock > 0)
+            {
+                pgnButtonList.Add(new ListItem { Text = "Previous", Value = Convert.ToString(startPage - blockSize), Enabled = startPage > blockSize });
+            }
+
+            for (int i = startPage; i <= endPage; i++)
             {
                 string j = Convert.ToString(i);
                 pgnButtonList.Add(new ListItem { Text = j, Value = j, Enabled = pageIndex != i });
+            }
+
+            if (endPage < pagecount)
+            {
+                pgnButtonList.Add(new ListItem { Text = "Next", Value = Convert.ToString(endPage + 1), Enabled = endPage < pagecount });
             }
 
             pgnButtonList.Add(new ListItem { Text = "Last", Value = Convert.ToString(pagecount), Enabled = pageIndex < pagecount });
@@ -99,7 +116,7 @@ namespace EmpManagement
         protected void BtnSearch_Click(object sender, EventArgs e)
         {
             pageSize = Convert.ToInt32(ddlPageSize.SelectedValue);
-            GetAllEmployees(pageSize,1, TxtSearch.Text);
+            GetAllEmployees(pageSize, 1, TxtSearch.Text);
         }
     }
 }

@@ -66,14 +66,12 @@
                     </tr>
                 </tfoot>
             </table>
-            <div class="d-flex align-items-center gap-3">
+            <div class="d-flex align-items-center gap-3 mb-5" id="divPagination" runat="server">
                 <div>
                     PageSize:
                             <asp:DropDownList ID="ddlPageSize" runat="server" ClientIDMode="Static" OnSelectedIndexChanged="ddlPageSize_SelectedIndexChanged" AutoPostBack="true">
-                                <asp:ListItem Text="5" Value="5" Selected="True" />
-                                <asp:ListItem Text="7" Value="7" />
-                                <asp:ListItem Text="12" Value="12" />
-                                <asp:ListItem Text="15" Value="15" />
+                                <asp:ListItem Text="10" Value="10" Selected="True" />
+                                <asp:ListItem Text="25" Value="25" />
                                 <asp:ListItem Text="50" Value="50" />
                                 <asp:ListItem Text="100" Value="100" />
                             </asp:DropDownList>

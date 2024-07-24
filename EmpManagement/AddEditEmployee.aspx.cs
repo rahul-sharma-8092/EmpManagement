@@ -62,9 +62,9 @@ namespace EmpManagement
             emp.Position = Position.Text;
             emp.Salary = string.IsNullOrEmpty(Salary.Text) ? 0 : Convert.ToDecimal(Salary.Text);
 
-            Dummy1000UserDataSavetoDB(emp, PageMode);
+            //Dummy1000UserDataSavetoDB(emp, PageMode);
 
-            int result = 1; //new BAL.EmployeeMGNT().AddEditEmployee(emp, PageMode);
+            int result = new BAL.EmployeeMGNT().AddEditEmployee(emp, PageMode);
             if (result == 1)
             {
 
@@ -143,7 +143,7 @@ namespace EmpManagement
             }
         }
 
-        private void Dummy1000UserDataSavetoDB(Entity.Employee emp, string pagemode)
+        private void Dummy1000UserDataSavetoDB()
         {
             Random random = new Random();
             List<string> positions = new List<string>
@@ -947,8 +947,9 @@ namespace EmpManagement
                    "Diaz", "Hayes"
 };
 
+            Entity.Employee emp = new Entity.Employee();
 
-            for (int i = 17; i <= 5000000; i++)
+            for (int i = 17; i <= 500; i++)
             {
                 emp.FirstName = $"{firstNames[random.Next(firstNames.Count)]}";
                 emp.LastName = $"{lastNames[random.Next(lastNames.Count)]}";
@@ -958,9 +959,7 @@ namespace EmpManagement
                 emp.Salary = random.Next(15000, 120000);
                 emp.Position = positions[random.Next(positions.Count)];
 
-
-                new BAL.EmployeeMGNT().AddEditEmployee(emp, pagemode);
-
+                new BAL.EmployeeMGNT().AddEditEmployee(emp, "Add");
             }
         }
     }
