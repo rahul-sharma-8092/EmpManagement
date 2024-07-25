@@ -65,5 +65,6 @@
     <Build Include="Stored Procedure\GetAllEmployees.sql" />
     <Build Include="Stored Procedure\GetEmployeeByID.sql" />
     <Build Include="Table\Employee.sql" />
+    <Build Include="Table\Logs.sql" />
   </ItemGroup>
 </Project>
