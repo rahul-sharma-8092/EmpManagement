@@ -35,6 +35,14 @@ namespace EmpManagement
             // ready for production, use the build tool at https://modernizr.com to pick only the tests you need
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                             "~/Scripts/modernizr-*"));
+
+            bundles.Add(new StyleBundle("~/bundles/JqueryBootstrapCSS").Include(
+                "~/Content/bootstrap.min.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/TestJS").Include(
+                "~/Js/AddEditEmployee.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/JqueryJS").Include("~/Scripts/jquery-3.7.0.min.js"));
         }
 
         public static void RegisterJQueryScriptManager()

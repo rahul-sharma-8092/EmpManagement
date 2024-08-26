@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,6 +23,11 @@ namespace BAL
         public List<Entity.Employee> GetAllEmployees(int pageSize, int pageIndex, string search)
         {
             return new DAL.EmployeeSQL().GetAllEmployees(pageIndex, pageSize, search);
+        }
+
+        public DataSet GetAllEmployeesDataSet(int pageSize, int pageIndex, string search)
+        {
+            return new DAL.EmployeeSQL().GetAllEmployeesDataSet(pageIndex, pageSize, search);
         }
 
         public int DeleteEmployeeByID(long empId)

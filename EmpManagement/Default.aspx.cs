@@ -27,7 +27,7 @@ namespace EmpManagement
 
         private void GetAllEmployees(int parmPageSize = 10, int parmPageIndex = 1, string parmSearch = "")
         {
-            List<Employee> listEmp = new EmployeeMGNT().GetAllEmployees(parmPageSize, parmPageIndex, parmSearch);
+            List<Entity.Employee> listEmp = new EmployeeMGNT().GetAllEmployees(parmPageSize, parmPageIndex, parmSearch);
 
             RptEmployee.DataSource = listEmp;
             RptEmployee.DataBind();

@@ -99,6 +99,7 @@ namespace DAL
             try
             {
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandTimeout = 0;
                 cmd.Parameters.AddWithValue("@pageIndex", pageIndex);
                 cmd.Parameters.AddWithValue("@pageSize", pageSize);
                 cmd.Parameters.AddWithValue("@search", search);
@@ -163,6 +164,36 @@ namespace DAL
                 cmd.Dispose();
             }
             return rowAffected;
+        }
+
+        public DataSet GetAllEmployeesDataSet(int pageIndex, int pageSize, string search)
+        {
+            DataSet DS = new DataSet();
+            SqlConnection conn = new SqlConnection(connString);
+            SqlCommand cmd = new SqlCommand("GetAllEmployees", conn);
+            try
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandTimeout = 0;
+                cmd.Parameters.AddWithValue("@pageIndex", pageIndex);
+                cmd.Parameters.AddWithValue("@pageSize", pageSize);
+                cmd.Parameters.AddWithValue("@search", search);
+                conn.Open();
+                
+                SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                sda.Fill(DS);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+                conn.Dispose();
+                cmd.Dispose();
+            }
+            return DS;
         }
     }
 }
